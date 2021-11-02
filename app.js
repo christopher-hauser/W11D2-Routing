@@ -1,16 +1,23 @@
 
-// const nodemon = require('nodemon');
+const nodemon = require('nodemon');
 const express = require('express');
 const app = express();
+app.set('view engine', 'pug');
+
 
 app.get('/', (req, res) => {
     res.send('Hello from Express!')
-    const method = req.method;
-    const path = req.path;
-    const random = Math.floor(Math.random()*100);
-    console.log(random);
+
+})
+app.get(/^\/[\w-]+[^xyz]$/, (req, res) => {
+    const randomNum = Math.floor(Math.random()*100);
+    //console.log(random);
+    res.render('index', { method: req.method, path: req.path, randomNum})
 })
 
+app.get(/^\/(.+)?xyz$/, (req, res) => {
+    res.send('That\'s all I wrote.');
+})
 
 
 
